@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('first_name');
             $table->string('middle_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('last_name');
             $table->string('city')->nullable();
             $table->integer('role_id')->unsigned();
         });

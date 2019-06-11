@@ -26,6 +26,7 @@ class CreateTasksTable extends Migration
 
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('company_id')->references('id')->on('companies');
+            
             $table->timestamps();
         });
     }

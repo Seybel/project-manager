@@ -15,10 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/about', function (){
-//     return view('about');
-// });
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('companies', 'CompaniesController');
+// Route::resource('comments', 'CommentsController');
+Route::resource('projects', 'ProjectsController');
+Route::resource('roles', 'RolesController');
+Route::resource('tasks', 'TasksController');
+Route::resource('users', 'UsersController');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
@@ -14,7 +15,15 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        //
+        //Checks if a user is logged in before accessing app's content
+        if (Auth::check()) {
+            $projects = Project::where('user_id', Auth::user()->id)->get();
+
+            return view('projects.index', ['projects' => $projects]);
+        }
+
+        //if user is not logged in, redirect to login page
+        return view('auth.login');
     }
 
     /**
@@ -22,9 +31,10 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($company_id = null)
     {
-        //
+        //Displays a form page where user can add new projects 
+        return view('projects.create', ['company_id' => $company_id]);
     }
 
     /**
@@ -35,7 +45,22 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //After inputing details in the "create" form, the below stores the input in the database
+        if (Auth::check()) {
+            $project = Project::create([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'company_id' => $request->input('company_id'),
+                'user_id' => Auth::user()->id
+            ]);
+            if ($project) {
+                return redirect()->route('projects.show', ['project' => $project->id])
+                    ->with('success', 'project created successfully');
+            }
+        }
+
+        //redirect
+        return back()->withInput()->with('errors', 'Error creating a new project');
     }
 
     /**
@@ -46,7 +71,9 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $project = Project::find($project->id);
+
+        return view('projects.show', ['project' => $project]);
     }
 
     /**
@@ -58,6 +85,9 @@ class ProjectsController extends Controller
     public function edit(Project $project)
     {
         //
+        $project = Project::find($project->id);
+
+        return view('projects.edit', ['project' => $project]);
     }
 
     /**
@@ -69,7 +99,19 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        //save data
+        $projectUpdate = Project::where('id', $project->id)
+            ->update([
+                'name' => $request->input('name'),
+                'description' => $request->input('description')
+            ]);
+        //check if update is done, redirect and display a success message
+        if ($projectUpdate) {
+            return redirect()->route('projects.show', ['project' => $project->id])
+                ->with('success', 'Project updated successfully');
+        }
+        //redirect
+        return back()->withInput();
     }
 
     /**
@@ -80,6 +122,17 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        //finds id of project specified for deletion
+        $findProject = Project::find($project->id);
+
+        //deletes from database if found
+        if ($findProject->delete()) {
+
+            //redirect to index page upon deletion
+            return redirect()->route('projects.index')
+                ->with('success', 'Project deleted succesfully');
+        }
+        //if id not found, go back to previous page and retain previous input
+        return back()->withInput()->with('errors', 'Project could not be deleted');
     }
 }

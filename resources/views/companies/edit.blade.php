@@ -6,6 +6,7 @@
 
     <!-- Example row of columns -->
     <div class="col-md-12 col-lg-12 col-sm-12 bg-white">
+        <h1 style="margin-left: 15px; color: #3490dc;">Update company</h1>
 
         <form method="post" action="{{ route('companies.update', [$company->id]) }}">
                     {{ csrf_field() }}

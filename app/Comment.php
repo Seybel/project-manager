@@ -16,4 +16,8 @@ class Comment extends Model
         'user_id',
     ];
 
+    //Defining database relationships
+    public function commentable() {
+        return $this->morphTo();
+    }
 }

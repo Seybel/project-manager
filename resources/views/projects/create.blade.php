@@ -3,29 +3,34 @@
 @section('content')
 
 <div class="row col-md-9 col-lg-9 col-sm-9 mt-4 pull-left bg-white">
-    <h1 style="margin-left: 15px; color: #3490dc;">Create new company</h1>
+    <h1 style="margin-left: 15px; color: #3490dc;">Create new project</h1>
 
     <!-- Example row of columns -->
     <div class="col-md-12 col-lg-12 col-sm-12">
 
-        <form method="post" action="{{ route('companies.store') }}">
+        <form method="post" action="{{ route('projects.store') }}">
             {{ csrf_field() }}
 
             <div class="form-group">
-                <label for="company-name">Name<span class="required" style="color: #8b0000">*</span></label>
-                <input  placeholder="Enter company name" 
-                        id="company-name"
+                <label for="project-name">Name<span class="required" style="color: #8b0000">*</span></label>
+                <input  placeholder="Enter name" 
+                        id="project-name"
                         required 
                         name="name"
                         spellcheck="false"
                         class="form-control"/>
             </div>
 
+                <input  type="hidden"
+                        name="company_id"
+                        value="{{ $company_id }}"/>
+
+
             <div class="form-group">
-                <label for="company-content">Description</label>
+                <label for="project-content">Description</label>
                 <textarea   placeholder="Enter description"
                             style="resize: vertical"
-                            id="company-content"
+                            id="project-content"
                             name="description"
                             class="form-control autosize-target text-left"
                             rows="5" spellcheck="false">
@@ -51,7 +56,7 @@
     <div class="sidebar-module">
         <h4>Actions</h4>
         <ol class="list-unstyled">
-            <li><a href="/companies">All companies</a></li>
+            <li><a href="/projects">My Projects</a></li>
         </ol>
     </div>
 

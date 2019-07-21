@@ -2,34 +2,37 @@
 
 @section('content')
 
-<div class="row col-md-9 col-lg-9 col-sm-9 mt-4 pull-left bg-white">
-    <h1 style="margin-left: 15px; color: #3490dc;">Create new company</h1>
+<div class="row col-md-9 col-lg-9 col-sm-9 mt-4 pull-left">
 
     <!-- Example row of columns -->
-    <div class="col-md-12 col-lg-12 col-sm-12">
+    <div class="col-md-12 col-lg-12 col-sm-12 bg-white">
 
-        <form method="post" action="{{ route('companies.store') }}">
-            {{ csrf_field() }}
+        <form method="post" action="{{ route('companies.update', [$company->id]) }}">
+                    {{ csrf_field() }}
+
+            <input type="hidden" name="_method" value="put">
 
             <div class="form-group">
                 <label for="company-name">Name<span class="required" style="color: #8b0000">*</span></label>
-                <input  placeholder="Enter company name" 
+                <input  placeholder="Enter company name"
                         id="company-name"
                         required 
                         name="name"
                         spellcheck="false"
-                        class="form-control"/>
+                        class="form-control"
+                        value="{{ $company->name }}" 
+                />
             </div>
 
             <div class="form-group">
                 <label for="company-content">Description</label>
                 <textarea   placeholder="Enter description"
-                            style="resize: vertical"
+                            style="resize: vertical" 
                             id="company-content"
-                            name="description"
+                            name="description" 
                             class="form-control autosize-target text-left"
                             rows="5" spellcheck="false">
-                </textarea>
+                            {{$company->description}}</textarea>
             </div>
 
             <div class="form-group">
@@ -51,6 +54,7 @@
     <div class="sidebar-module">
         <h4>Actions</h4>
         <ol class="list-unstyled">
+            <li><a href="/companies/{{ $company->id }}">View companies</a></li>
             <li><a href="/companies">All companies</a></li>
         </ol>
     </div>

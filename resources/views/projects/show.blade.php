@@ -10,7 +10,7 @@
     </div>
 
     <!-- Example row of columns -->
-    <div class="row bg-white" style="margin:2px">
+    <div class="row mt-3 bg-white" style="margin:2px">
 
         <!-- {{-- @foreach($project->projects as $project)
         <div class="col-lg-4 mt-3">
@@ -19,6 +19,42 @@
             <p><a class="btn btn-primary" href="/projects/{{ $project->id }}" role="button">View Project »</a></p>
         </div>
         @endforeach --}} -->
+
+        <div class="col-md-12 col-lg-12 col-sm-12">
+
+            <form method="post" action="{{ route('comments.store') }}">
+                {{ csrf_field() }}
+
+                <input type="hidden" name="commentable_type" value="Project">
+                <input type="hidden" name="commentable_id" value="{{ $project->id }}">
+
+                <div class="form-group">
+                    <label for="comment-content">Comment</label>
+                    <textarea   placeholder="Enter comment"
+                                style="resize: vertical"
+                                id="comment-content"
+                                name="body"
+                                class="form-control autosize-target text-left"
+                                rows="3" spellcheck="false">
+                    </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment-content">Proof of workdone (Url/Photos)</label>
+                    <textarea   placeholder="Enter url or screenshots"
+                                style="resize: vertical"
+                                id="comment-content"
+                                name="url"
+                                class="form-control autosize-target text-left"
+                                rows="2" spellcheck="false">
+                    </textarea>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+            </form>
+        </div>
 
     </div>
 

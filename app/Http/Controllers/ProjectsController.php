@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,8 +34,14 @@ class ProjectsController extends Controller
      */
     public function create($company_id = null)
     {
+        $companies = null;
+        //Checks if a company_id is not in the create route and if so, lists all the companies related to the user
+        if(!$company_id) {
+            $companies = Company::where('user_id', Auth::user()->id)->get();
+        }
+
         //Displays a form page where user can add new projects 
-        return view('projects.create', ['company_id' => $company_id]);
+        return view('projects.create', ['company_id' => $company_id, 'companies' => $companies]);
     }
 
     /**

@@ -25,6 +25,17 @@
                         name="company_id"
                         value="{{ $company_id }}"/>
 
+            @if($companies != null)
+                <div class="form-group">
+                    <label for="company-content">Select company</label>
+                    <select name="company_id" class="form-control">
+                        @foreach ($companies as $company)
+                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
 
             <div class="form-group">
                 <label for="project-content">Description</label>

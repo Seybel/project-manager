@@ -20,8 +20,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group( function() {
+    
 Route::resource('companies', 'CompaniesController');
-// Route::resource('comments', 'CommentsController');
+Route::resource('comments', 'CommentsController');
 
 Route::get('/projects/create/{company_id?}', 'ProjectsController@create');
 Route::resource('projects', 'ProjectsController');

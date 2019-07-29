@@ -21,9 +21,12 @@
                         class="form-control"/>
             </div>
 
+            @if($companies == null)
                 <input  type="hidden"
+                        class="form-control"
                         name="company_id"
                         value="{{ $company_id }}"/>
+            @endif
 
             @if($companies != null)
                 <div class="form-group">

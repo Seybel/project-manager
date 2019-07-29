@@ -12,20 +12,12 @@
     <!-- Example row of columns -->
     <div class="row mt-3 bg-white" style="margin:2px">
 
-        <!-- {{-- @foreach($project->projects as $project)
-        <div class="col-lg-4 mt-3">
-            <h2>{{ $project->name }}</h2>
-            <p class="text-danger">{{ $project->description }}</p>
-            <p><a class="btn btn-primary" href="/projects/{{ $project->id }}" role="button">View Project »</a></p>
-        </div>
-        @endforeach --}} -->
-
         <div class="col-md-12 col-lg-12 col-sm-12">
 
             <form method="post" action="{{ route('comments.store') }}">
                 {{ csrf_field() }}
 
-                <input type="hidden" name="commentable_type" value="Project">
+                <input type="hidden" name="commentable_type" value="App\Project">
                 <input type="hidden" name="commentable_id" value="{{ $project->id }}">
 
                 <div class="form-group">
@@ -55,6 +47,14 @@
                 </div>
             </form>
         </div>
+
+        @foreach($project->comments as $comment)
+        <div class="col-lg-4 mt-3">
+            <h2>{{ $comment->body }}</h2>
+            <p class="text-danger"><a href="/{{ $comment->url }}">{{ $comment->url }}</a></p>
+            <!-- <p><a class="btn btn-primary" href="/projects/{{ $project->id }}" role="button">View Comment »</a></p> -->
+        </div>
+        @endforeach
 
     </div>
 
